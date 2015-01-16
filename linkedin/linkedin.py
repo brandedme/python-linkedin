@@ -487,6 +487,16 @@ class LinkedInApplication(object):
         raise_for_error(response)
         return True
 
+    def submit_network_update(self, body, locale='en_US'):
+        url = '%s/~/person-activities' % (ENDPOINTS.PEOPLE)
+        post = """<activity locale="en_US">
+            <content-type>linkedin-html</content-type>
+            <body>{}</body></activity>""".format(urllib.quote(body))
+
+        response = self.make_request('POST', url, data=post)
+        raise_for_error(response)
+        return True
+
     def send_message(self, message):
         assert type(message) == LinkedInMessage, 'LinkedInInvitation required'
         url = '%s/~/mailbox' % ENDPOINTS.PEOPLE
